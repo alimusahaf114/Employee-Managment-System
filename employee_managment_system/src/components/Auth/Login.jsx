@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-const Login = () => {
+const Login = ({handleLogin}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleLogin(email, password)
     setEmail("")
     setPassword("")
   };
@@ -40,7 +41,8 @@ const Login = () => {
                 e.target.value = ''
             }}
           />
-          <button className=" text-white  bg-blue-700 rounded-full py-3 px-4 mt-3 text-xl w-full text-bold">
+          <button className=" text-white  bg-blue-700 rounded-full py-3 px-4 mt-3 text-xl w-full text-bold"
+            >
             log in{" "}
           </button>
         </form>
