@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Login from '../Auth/Login';
 
-const Header = ({data}) => {
+const Header = ({data , changeUser}) => {
   const handleLogOut=()=>{
     const confirmLogout = window.confirm("Do you want to Log Out?");
       if(confirmLogout){
         localStorage.setItem('loggedInUser','') 
-        window.location.reload()
+        changeUser('')
       }
   }
   return (

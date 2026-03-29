@@ -3,14 +3,13 @@ import CompleteTask from './CompleteTask';
 import FailedTask from './FailedTask';
 import NewTasks from './NewTasks';
 
-const TasksList = ({data}) => { 
- 
-  
+const TasksList = ({data}) => {   
   
   return (
     <div id='taskList' className='flex overflow-x-auto items-center flex-nowrap justify-start gap-5  h-[55%] py-5 w-full -10'>
        {
         data.tasks.map((elem , keeee)=>{
+          
           if(elem.active){
             return <AcceptTask data={elem} key={keeee}/>
           }
@@ -21,7 +20,8 @@ const TasksList = ({data}) => {
             return <CompleteTask data={elem} key={keeee} />
           }
           if(elem.failed){
-            return <FailedTask data={elem} key={keeee} /> 
+            console.log(elem);
+            return <FailedTask data={elem}key={keeee} /> 
           }
         })
        }

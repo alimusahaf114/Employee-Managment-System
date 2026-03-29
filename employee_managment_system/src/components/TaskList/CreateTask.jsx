@@ -1,14 +1,68 @@
-import React from 'react'
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 
 const CreateTask = () => {
+  const [userData , setUserData] = useContext(AuthContext)
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskDate, setTaskDate] = useState("");
+  const [assignTo, setAsssignTo] = useState("");
+  const [category, setCategory] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const newTaskObj = {
+      active: false,
+      newTask: true,
+      completed: false,
+      failed: false,
+    title: taskTitle,
+    description: taskDescription,
+    date: taskDate,
+    category,
+  };
+    
+
+    // const data = userData.employees
+    
+     const updatedEmployees = userData.employees.map((item) => {
+    if (assignTo === item.firstName) {
+      return {
+        ...item,
+        tasks: [...item.tasks, newTaskObj],
+        taskCount: {
+          ...item.taskCount,
+          newTask: item.taskCount.newTask + 1,
+        },
+      };
+    }
+    return item;
+    })
+    setUserData({...userData,employees:updatedEmployees})
+    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    setAsssignTo('')
+    setTaskDate('')
+    setCategory('')
+    setTaskDescription('')
+    setTaskTitle('')
+  };
   return (
     <div>
       <div className="p-5  mt-7 rounded">
-        <form className="flex  flex-wrap w-full items-start justify-between">
+        <form
+          onSubmit={(e) => {
+            submitHandler(e);
+          }}
+          className="flex  flex-wrap w-full items-start justify-between"
+        >
           <div className="w-1/2">
             <div>
               <h3 className="text-sm text-grey-300 mb-0.5 ">Task Title</h3>
               <input
+                value={taskTitle}
+                onChange={(e) => {
+                  setTaskTitle(e.target.value);
+                }}
                 className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4 "
                 type="text"
                 placeholder="Make UI design here .... "
@@ -17,6 +71,10 @@ const CreateTask = () => {
             <div>
               <h3 className="text-sm text-grey-300 mb-0.5 ">Date</h3>
               <input
+                value={taskDate}
+                onChange={(e) => {
+                  setTaskDate(e.target.value);
+                }}
                 className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4 "
                 type="date"
                 name="date"
@@ -25,6 +83,10 @@ const CreateTask = () => {
             <div>
               <h3 className="text-sm text-grey-300 mb-0.5 ">Assign To</h3>
               <input
+                value={assignTo}
+                onChange={(e) => {
+                  setAsssignTo(e.target.value);
+                }}
                 className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4 "
                 type="text"
                 name="employee name"
@@ -34,6 +96,10 @@ const CreateTask = () => {
             <div>
               <h3 className="text-sm text-grey-300 mb-0.5 ">Category</h3>
               <input
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
                 className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4 "
                 type="text"
                 placeholder="design , dev , etc"
@@ -44,6 +110,10 @@ const CreateTask = () => {
           <div>
             <h3 className="text-sm text-grey-300 mb-0.5 ">Description</h3>
             <textarea
+              value={taskDescription}
+              onChange={(e) => {
+                setTaskDescription(e.target.value);
+              }}
               className="w-full h-44 text-sm py-2 px-4 rounded outline-none bg-transparent border-[1px] border-gray-400"
               name=""
               id=""
@@ -57,7 +127,7 @@ const CreateTask = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateTask
+export default CreateTask;

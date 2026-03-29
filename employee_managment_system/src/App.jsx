@@ -5,13 +5,13 @@ import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 // import { getLocalStorage, setLocalStorage } from "./utils/LocalStorage";
 import { AuthContext } from "./context/AuthProvider";
+import { setLocalStorage } from "./utils/LocalStorage";
 const App = () => {
   const [user, setUser] = useState(null);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const authData = useContext(AuthContext);
+  const [myUserData , setMyUserData] = useContext(AuthContext);
   
-  const employees = authData?.employees;
-  const admin = authData?.admin;
+  const employees = myUserData?.employees;
   useEffect(() => {
 
       const loggedInUser = localStorage.getItem("loggedInUser");
@@ -22,7 +22,7 @@ const App = () => {
       }
       
     
-  }, [authData]);
+  }, [myUserData]);
   const handleLogin = (email, password) => {
     if (email == "admin@me.com" && password == "123") {
       setUser("admin");
@@ -46,9 +46,9 @@ const App = () => {
       <>
         {!user ? <Login handleLogin={handleLogin} /> : ""}
         {user == "admin" ? (
-          <AdminDashboard />
+          <AdminDashboard  changeUser={setUser}/>
         ) : user == "employee" ? (
-          <EmployeeDashboard data={loggedInUser} setUser={setUser} />
+          <EmployeeDashboard data={loggedInUser} changeUser={setUser} />
         ) : (
           ""
         )}

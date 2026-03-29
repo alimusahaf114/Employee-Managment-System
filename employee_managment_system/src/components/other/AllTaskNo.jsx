@@ -1,6 +1,8 @@
 import React from 'react';
 
 const AllTaskNo = ({data}) => {
+    console.log();
+    
   return (
     <div className='flex mt-10 justify-between gap-5 screen'>
         <div className=' rounded-xl p-10 w-[45%] py-6 px-10 bg-red-400'>
