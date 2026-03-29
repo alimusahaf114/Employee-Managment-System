@@ -10,18 +10,18 @@ const TasksList = ({data}) => {
   return (
     <div id='taskList' className='flex overflow-x-auto items-center flex-nowrap justify-start gap-5  h-[55%] py-5 w-full -10'>
        {
-        data.tasks.map((elem)=>{
+        data.tasks.map((elem , keeee)=>{
           if(elem.active){
-            return <AcceptTask data={data}/>
+            return <AcceptTask data={elem} key={keeee}/>
           }
           if(elem.newTask){
-            return <NewTasks />
+            return <NewTasks data={elem} key={keeee} />
           } 
           if(elem.completed){
-            return <CompleteTask />
+            return <CompleteTask data={elem} key={keeee} />
           }
           if(elem.failed){
-            return <FailedTask /> 
+            return <FailedTask data={elem} key={keeee} /> 
           }
         })
        }
