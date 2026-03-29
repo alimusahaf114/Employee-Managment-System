@@ -13,16 +13,17 @@ const App = () => {
   
   const employees = myUserData?.employees;
   useEffect(() => {
+  if (!localStorage.getItem("employees")) {
+    setLocalStorage();
+  }
 
-      const loggedInUser = localStorage.getItem("loggedInUser");
-      if(loggedInUser){
-        const userData = JSON.parse(loggedInUser)
-        setUser(userData.role)
-        setLoggedInUser(userData.data)
-      }
-      
-    
-  }, [myUserData]);
+  const loggedInUser = localStorage.getItem("loggedInUser");
+  if (loggedInUser) {
+    const userData = JSON.parse(loggedInUser);
+    setUser(userData.role);
+    setLoggedInUser(userData.data);
+  }
+}, []);
   const handleLogin = (email, password) => {
     if (email == "admin@me.com" && password == "123") {
       setUser("admin");
